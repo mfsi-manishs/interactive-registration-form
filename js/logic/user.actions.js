@@ -1,5 +1,5 @@
 /**
- * @file userRegActions.js
+ * @file user.actions.js
  * @fileoverview This file contains the action functions for the user registration form. These action functions are used to update the app state.
  */
 
@@ -15,10 +15,10 @@ export function addUser(user) {
 
 /**
  * Action to delete a user from the app's state.
- * @param {string} id - the id of the user to delete
+ * @param {string} userId - the id of the user to delete
  */
-export function deleteUser(id) {
-  appState.users = appState.users.filter((u) => u.id !== id);
+export function deleteUser(userId) {
+  appState.users = appState.users.filter((u) => u.id !== userId);
 }
 
 /**

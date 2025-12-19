@@ -1,5 +1,5 @@
 /**
- * @file usersTable.js
+ * @file users.js
  * @fileoverview This file contains the functions for rendering the users table.
  */
 
@@ -24,14 +24,14 @@ export function renderUsersTable(users) {
         ${users
           .map(
             (user) => `
-          <tr data-id="${user.id}">
+          <tr>
             <td>${user.name}</td>
             <td>${user.email}</td>
             <td>
-              <button class="edit-btn">Edit</button>
+              <button data-id="${user.id}" class="edit-btn">Edit</button>
             </td>
             <td>
-              <button class="delete-btn">Delete</button>
+              <button data-id="${user.id}" class="delete-btn">Delete</button>
             </td>
           </tr>
         `

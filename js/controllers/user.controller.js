@@ -1,13 +1,15 @@
 /**
- * @file userRegFormController.js
+ * @file user.controller.js
  * @fileoverview This file contains the controller functions for the user registration form. Handles user-related actions and side effects
  */
 
 import { renderUsersTable } from "../components/users.js";
-import { resetUserForm } from "../dom.service.js";
+import { UI_STRINGS } from "../constants.js";
+import { fillUserForm, resetUserForm, setUserFormSubmitBtnText, updateUsersTableContainer } from "../dom.service.js";
 import { addUser, deleteUser, updateEditingUserId, updateUser } from "../logic/user.actions.js";
 import { validateUser } from "../logic/user.validation.js";
 import { appState } from "../state/app.state.js";
+import { selectUserbyId } from "../state/user.selectors.js";
 import { generateID } from "../utils/utils.js";
 
 /**
@@ -20,26 +22,60 @@ import { generateID } from "../utils/utils.js";
  * @returns {Object} errors - an object with error messages for each invalid property
  */
 export function handleAddOrUpdate(user) {
+  // validation
   const { isValid, errors } = validateUser(user);
 
   if (!isValid) {
-    return errors; // UI will show errors
+    return errors;
   }
 
-  // action
-  if (appState.editingUserId && appState.editingUserId === user.id) {
-    updateUser(user);
+  // mutate state with action
+  if (appState.editingUserId) {
+    updateUser({ ...user, id: appState.editingUserId });
     updateEditingUserId(null);
   } else {
     addUser({ ...user, id: generateID() });
   }
 
   // side effect
-  document.getElementById("user-table-container").innerHTML = renderUsersTable(appState.users); // TODO: how to do this better?
+  updateUsersTableContainer();
   resetUserForm();
 }
 
-export function handleDelete(id) {
-  deleteUser(id);
-  renderUsersTable(appState.users);
+/**
+ * Handles editing a user in the app's state.
+ * Mutates the app state by updating the editingUserId with the given userId.
+ * Selects the user object from the app state using the userId.
+ * If the user is found, fills the user registration form with the user data and sets the submit button text to "Update".
+ * If the user is not found, logs an error message.
+ * Side effects: re-renders the user registration form with the user data and sets the submit button text to "Update".
+ * @param {string} userId - the id of the user to edit
+ */
+export function handleEdit(userId) {
+  // mutate state with action
+  updateEditingUserId(userId);
+
+  const user = selectUserbyId(appState, userId);
+  if (!user) {
+    console.error("User not found");
+    return;
+  }
+
+  // side effect
+  fillUserForm(user);
+  setUserFormSubmitBtnText(UI_STRINGS.UPDATE_BTN_TEXT);
+}
+
+/**
+ * Handles deleting a user from the app's state.
+ * Mutates the app state by deleting the user with the given userId.
+ * Side effects: re-renders the users table.
+ * @param {string} userId - the id of the user to delete
+ */
+export function handleDelete(userId) {
+  // mutate state with action
+  deleteUser(userId);
+
+  // side effect
+  updateUsersTableContainer();
 }

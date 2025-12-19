@@ -1,5 +1,5 @@
 /**
- * @file userRegFormValidation.js
+ * @file user.validation.js
  * @fileoverview This file contains the validation functions for the user registration form.
  */
 
