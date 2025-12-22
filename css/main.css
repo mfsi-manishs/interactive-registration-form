@@ -37,7 +37,7 @@ button.delete-btn {
   background: #fff;
   padding: 1rem;
   border-radius: 0.25rem;
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.5);
 }
 
 /* Width control */
@@ -52,7 +52,7 @@ button.delete-btn {
 }
 
 .row-selected {
-  background-color: #f0f0f0;
+  background-color: lightgray !important;
 }
 
 /* Utility classes */
@@ -173,6 +173,9 @@ button.delete-btn {
   --radius: 8px;
   --focus-ring: 0 0 0 3px rgba(79, 70, 229, 0.25);
   --transition: 0.2s ease;
+  --header-bg: #f9fafb;
+  --row-hover: #f3f4f6;
+  --muted: #6b7280;
 }
 
 input[type="text"],
@@ -245,4 +248,56 @@ input[type="radio"]:checked::before {
 input[type="radio"]:focus {
   outline: none;
   box-shadow: var(--focus-ring);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+thead {
+  background-color: var(--header-bg);
+}
+
+th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+tbody tr:hover {
+  background-color: var(--row-hover);
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+table tr:first-child th:first-child {
+  border-top-left-radius: var(--radius);
+}
+
+table tr:first-child th:last-child {
+  border-top-right-radius: var(--radius);
 }
