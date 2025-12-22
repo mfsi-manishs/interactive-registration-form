@@ -69,6 +69,28 @@ export function setUserFormSubmitBtnText(text) {
 }
 
 /**
+ * Sets the given row index as selected in the users table.
+ * The row index is used to toggle the "row-selected" class on the corresponding table row element.
+ * If the given index is negative, the function will remove the "row-selected" class from all table rows.
+ * @param {number} index - the index of the row to select
+ */
+export function setRowSelected(index) {
+  try {
+    const userTable = document.getElementById("user-table");
+    const rows = userTable.querySelectorAll("tbody > tr");
+    rows.forEach((row, i) => {
+      if (i === index) {
+        row.classList.add("row-selected");
+      } else {
+        row.classList.remove("row-selected");
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+/**
  * Returns an object containing the values of all input fields in the user registration form.
  * @returns {Object | null} an object with input field names as keys and their corresponding values as values or null if some error occurs
  */
@@ -109,6 +131,8 @@ export function fillUserForm(user) {
     const userForm = getUserForm();
     userForm.name.value = user.name;
     userForm.email.value = user.email;
+    userForm.phone.value = user.phone;
+    userForm.gender.value = user.gender;
     userForm.dataset.id = user.id;
   } catch (error) {
     console.error(error);

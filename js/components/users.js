@@ -11,13 +11,13 @@
  */
 export function renderUsersTable(users) {
   return `
-    <table>
+    <table id="user-table" class="table-fixed w-100">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Edit</th>
-          <th>Delete</th>
+          <th class="w-40 text-left">Name</th>
+          <th class="w-40 text-left">Email</th>
+          <th class="w-10 text-center">Edit</th>
+          <th class="w-10 text-center">Delete</th>
         </tr>
       </thead>
       <tbody>

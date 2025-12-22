@@ -3,13 +3,12 @@
  * @fileoverview This file contains the controller functions for the user registration form. Handles user-related actions and side effects
  */
 
-import { renderUsersTable } from "../components/users.js";
 import { UI_STRINGS } from "../constants.js";
-import { fillUserForm, resetUserForm, setUserFormSubmitBtnText, updateUsersTableContainer } from "../dom.service.js";
+import { fillUserForm, resetUserForm, setRowSelected, setUserFormSubmitBtnText, updateUsersTableContainer } from "../dom.service.js";
 import { addUser, deleteUser, updateEditingUserId, updateUser } from "../logic/user.actions.js";
 import { validateUser } from "../logic/user.validation.js";
 import { appState } from "../state/app.state.js";
-import { selectUserbyId } from "../state/user.selectors.js";
+import { selectAllUsers, selectUserbyId } from "../state/user.selectors.js";
 import { generateID } from "../utils/utils.js";
 
 /**
@@ -29,8 +28,10 @@ export function handleAddOrUpdate(user) {
     return errors;
   }
 
+  const isEditing = appState.editingUserId ? true : false;
+
   // mutate state with action
-  if (appState.editingUserId) {
+  if (isEditing) {
     updateUser({ ...user, id: appState.editingUserId });
     updateEditingUserId(null);
   } else {
@@ -40,6 +41,9 @@ export function handleAddOrUpdate(user) {
   // side effect
   updateUsersTableContainer();
   resetUserForm();
+  if (isEditing) {
+    setRowSelected(-1); // reset row selection
+  }
 }
 
 /**
@@ -61,9 +65,22 @@ export function handleEdit(userId) {
     return;
   }
 
+  const allUsers = selectAllUsers(appState);
+  if (!allUsers) {
+    console.error("All users not found");
+    return;
+  }
+
+  const index = allUsers.findIndex((u) => u.id === userId);
+  if (index < 0) {
+    console.error("User index not found");
+    return;
+  }
+
   // side effect
   fillUserForm(user);
   setUserFormSubmitBtnText(UI_STRINGS.UPDATE_BTN_TEXT);
+  setRowSelected(index);
 }
 
 /**
