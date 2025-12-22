@@ -3,7 +3,7 @@
  * @fileoverview This file contains the controller functions for the user registration form. Handles user-related actions and side effects
  */
 
-import { UI_STRINGS } from "../constants.js";
+import { MESSAGES, UI_STRINGS } from "../constants.js";
 import { fillUserForm, resetUserForm, setRowSelected, setUserFormSubmitBtnText, updateUsersTableContainer } from "../dom.service.js";
 import { addUser, deleteUser, updateEditingUserId, updateUser } from "../logic/user.actions.js";
 import { validateUser } from "../logic/user.validation.js";
@@ -90,6 +90,11 @@ export function handleEdit(userId) {
  * @param {string} userId - the id of the user to delete
  */
 export function handleDelete(userId) {
+  const confirmed = confirm(MESSAGES.CONFIRM_DEL_USER_MSG);
+  if (!confirmed) {
+    return;
+  }
+
   // mutate state with action
   deleteUser(userId);
 

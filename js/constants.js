@@ -4,6 +4,10 @@ export const ERROR_MESSAGES = {
   INVALID_EMAIL_TXT: "Invalid email",
 };
 
+export const MESSAGES = {
+  CONFIRM_DEL_USER_MSG: "Are you sure you want to delete this user?",
+};
+
 export const UI_STRINGS = {
   SUBMIT_BTN_TEXT: "Submit",
   UPDATE_BTN_TEXT: "Update",
