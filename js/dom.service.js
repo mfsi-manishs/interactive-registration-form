@@ -114,6 +114,7 @@ export function resetUserForm() {
     userForm.reset();
     userForm.dataset.id = "";
     setUserFormSubmitBtnText(UI_STRINGS.SUBMIT_BTN_TEXT);
+    resetUserFormErrors();
   } catch (error) {
     console.error(error);
   }
@@ -134,6 +135,63 @@ export function fillUserForm(user) {
     userForm.phone.value = user.phone;
     userForm.gender.value = user.gender;
     userForm.dataset.id = user.id;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+/**
+ * Resets the error messages and input fields in the user registration form to their initial state.
+ * This includes resetting the error message text, hiding the error message elements, and removing the "input-error" class from all input fields.
+ */
+export function resetUserFormErrors() {
+  try {
+    const userForm = getUserForm();
+    userForm.querySelectorAll(".error-msg").forEach((errEl) => {
+      errEl.textContent = "";
+      errEl.style.display = "none";
+    });
+
+    userForm.querySelectorAll(".input-error").forEach((inputEl) => {
+      inputEl.classList.remove("input-error");
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+/**
+ * Shows error messages for the user registration form.
+ * Resets the error messages and input fields to their initial state.
+ * Then, sets the error messages and input field classes to indicate the invalid fields.
+ * @param {Object} errors - an object with property names as field names and property values as error messages
+ */
+export function showUserFormErrors(errors) {
+  try {
+    const userForm = getUserForm();
+
+    // reset error messages
+    resetUserFormErrors();
+
+    // set error messages
+    Object.entries(errors).forEach(([field, errMsg]) => {
+      const inputEl = userForm.querySelector(`[name="${field}"]`);
+      if (!inputEl) {
+        console.error(`Input element not found for field: ${field}`);
+        return;
+      }
+
+      // find the next sibling element with class "error-msg" to display error message
+      const errEl = inputEl.nextElementSibling;
+      if (errEl && errEl.classList.contains("error-msg")) {
+        errEl.textContent = errMsg;
+        errEl.style.display = "block";
+        inputEl.classList.add("input-error");
+      } else {
+        console.error(`Error element not found for field: ${field}`);
+        return;
+      }
+    });
   } catch (error) {
     console.error(error);
   }

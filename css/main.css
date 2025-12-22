@@ -21,8 +21,8 @@ td {
   border: 1px solid gray;
 }
 
-tbody tr td>button.edit-btn,
-tbody tr td>button.delete-btn {
+tbody tr td > button.edit-btn,
+tbody tr td > button.delete-btn {
   text-align: center !important;
 }
 
@@ -102,6 +102,10 @@ button.delete-btn {
   padding: 1rem;
 }
 
+.mb-s {
+  margin-bottom: 0.5rem;
+}
+
 .mb-m {
   margin-bottom: 1rem;
 }
@@ -130,6 +134,16 @@ button.delete-btn {
 
 .table-fixed {
   table-layout: fixed;
+}
+
+.error-msg {
+  color: red;
+  font-size: 0.75rem;
+  display: none;
+}
+
+.input-error {
+  border: 1px solid red !important;
 }
 
 /* Media queries */

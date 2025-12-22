@@ -2,6 +2,8 @@ export const ERROR_MESSAGES = {
   NAME_REQ_TXT: "Name is required",
   EMAIL_REQ_TXT: "Email is required",
   INVALID_EMAIL_TXT: "Invalid email",
+  PHONE_REQ_TXT: "Phone is required",
+  INVALID_PHONE_TXT: "Invalid phone number",
 };
 
 export const MESSAGES = {

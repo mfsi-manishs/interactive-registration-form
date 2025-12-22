@@ -11,8 +11,11 @@ export function renderUserForm() {
   return `
     <form id="user-form">
       <input name="name" placeholder="Full Name" required class="w-100 border-box mb-m" />
+      <span class="error-msg mb-m"></span>
       <input name="email" placeholder="Email" required class="w-100 border-box mb-m" />
+      <span class="error-msg mb-m"></span>
       <input name="phone" placeholder="Phone Number" required class="w-100 border-box mb-m" />
+      <span class="error-msg mb-m"></span>
       <div class="w-100 border-box border-thin mb-m">
         <span>Gender:</span>
         <label>

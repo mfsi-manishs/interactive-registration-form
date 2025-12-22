@@ -4,7 +4,14 @@
  */
 
 import { MESSAGES, UI_STRINGS } from "../constants.js";
-import { fillUserForm, resetUserForm, setRowSelected, setUserFormSubmitBtnText, updateUsersTableContainer } from "../dom.service.js";
+import {
+  fillUserForm,
+  resetUserForm,
+  setRowSelected,
+  setUserFormSubmitBtnText,
+  showUserFormErrors,
+  updateUsersTableContainer,
+} from "../dom.service.js";
 import { addUser, deleteUser, updateEditingUserId, updateUser } from "../logic/user.actions.js";
 import { validateUser } from "../logic/user.validation.js";
 import { appState } from "../state/app.state.js";
@@ -25,7 +32,8 @@ export function handleAddOrUpdate(user) {
   const { isValid, errors } = validateUser(user);
 
   if (!isValid) {
-    return errors;
+    showUserFormErrors(errors);
+    return;
   }
 
   const isEditing = appState.editingUserId ? true : false;
@@ -78,6 +86,7 @@ export function handleEdit(userId) {
   }
 
   // side effect
+  resetUserForm();
   fillUserForm(user);
   setUserFormSubmitBtnText(UI_STRINGS.UPDATE_BTN_TEXT);
   setRowSelected(index);

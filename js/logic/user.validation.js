@@ -23,5 +23,11 @@ export function validateUser(user) {
     errors.email = ERROR_MESSAGES.INVALID_EMAIL_TXT;
   }
 
+  if (!user.phone.trim()) {
+    errors.phone = ERROR_MESSAGES.PHONE_REQ_TXT;
+  } else if (!user.phone.match(/^[6-9]\d{9}$/)) {
+    errors.phone = ERROR_MESSAGES.INVALID_PHONE_TXT;
+  }
+
   return { isValid: Object.keys(errors).length === 0, errors: errors };
 }
