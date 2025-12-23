@@ -27,10 +27,10 @@ export function renderUsersTable(users) {
           <tr>
             <td>${user.name}</td>
             <td>${user.email}</td>
-            <td>
+            <td class="text-center">
               <button data-id="${user.id}" class="edit-btn">Edit</button>
             </td>
-            <td>
+            <td class="text-center">
               <button data-id="${user.id}" class="delete-btn">Delete</button>
             </td>
           </tr>
