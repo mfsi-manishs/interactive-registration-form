@@ -14,19 +14,25 @@ export function renderUsersTable(users) {
     <table id="user-table" class="table-fixed w-100">
       <thead>
         <tr>
-          <th class="w-40 text-left">Name</th>
-          <th class="w-40 text-left">Email</th>
+          <th class="w-25 text-left">Name</th>
+          <th class="w-25 text-left">Email</th>
+          <th class="w-15 text-left">Phone</th>
+          <th class="w-15 text-left">Gender</th>
           <th class="w-10 text-center">Edit</th>
           <th class="w-10 text-center">Delete</th>
         </tr>
       </thead>
       <tbody>
-        ${users
-          .map(
-            (user) => `
+        ${
+          users.length > 0
+            ? users
+                .map(
+                  (user) => `
           <tr>
             <td>${user.name}</td>
             <td>${user.email}</td>
+            <td>${user.phone}</td>
+            <td>${user.gender}</td>
             <td class="text-center">
               <button data-id="${user.id}" class="edit-btn">Edit</button>
             </td>
@@ -35,8 +41,10 @@ export function renderUsersTable(users) {
             </td>
           </tr>
         `
-          )
-          .join("")}
+                )
+                .join("")
+            : `<tr><td colspan="6" class="text-center">No users found. Please add a new user.</td></tr>`
+        }
       </tbody>
     </table>
   `;
